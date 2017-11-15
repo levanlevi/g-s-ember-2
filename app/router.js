@@ -6,7 +6,10 @@ const Router = EmberRouter.extend({
   rootURL: config.rootURL
 });
 
-Router.map(function() {
+Router.map(function () {
+  this.route('production', { path: "/:start/to/:end" }, function () {
+    this.route('dimension', { path: "/dimension/:dimension_id" });
+  });
 });
 
 export default Router;
