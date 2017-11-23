@@ -1,4 +1,5 @@
 import Route from '@ember/routing/route';
+import Production from 'loopylog/models/production'
 const Promise = Ember.RSVP.Promise;
 
 export default Route.extend({
@@ -13,7 +14,13 @@ export default Route.extend({
         return new Promise(function (resolve) {
             setTimeout(function () {
                 let data = Ember.$.getJSON(`/data/production.json?start=${params.start}&end=${params.end}`);
-                resolve(data);
+                data.then(function (data) {
+                    let records = [];
+                    data.forEach(element => {
+                        records.push(Production.create(element));
+                    });
+                    resolve(records);
+                });
             }, 800);
         });
     }
